@@ -21,15 +21,15 @@ A simple calculator built using **x86 Assembly (MASM/TASM)** that can perform **
 
 ## 🚀 Setup & Usage  
 1. Clone this repository:  
+
    ```sh
    git clone https://github.com/yourusername/assembly-calculator.git
    cd assembly-calculator
- ```
 
 2. Assemble and run the program using MASM/TASM:
+
     ```sh 
     masm calculator.asm
     link calculator.obj
     calculator.exe
-    ```
 
