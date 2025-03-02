@@ -19,7 +19,7 @@ ENDM
 
 .DATA
     ; Messages
-    menu_msg   DB '1. AND (&)',0DH, 0AH,'2. OR (|) ',0DH, 0AH,'3. XOR (^) ',0DH, 0AH,'4. ADD (+) ',0DH, 0AH,'5. SUB (-) ',0DH, 0AH,'6. MUL (*) ',0DH, 0AH,'7. DIV (/) ',0DH, 0AH,'8. Exit$', 0DH, 0AH, '$'
+    menu_msg   DB '1. AND (&)',0DH, 0AH,'2. OR (|) ',0DH, 0AH,'3. XOR (^) ',0DH, 0AH,'4. ADD (+) ',0DH, 0AH,'5. SUB (-) ',0DH, 0AH,'6. MUL (*) ',0DH, 0AH,'7. DIV (/) ',0DH, 0AH,'8. Exit', 0DH, 0AH, '$'
     num1_msg   DB 'Enter the first number : $'
     num2_msg   DB 'Enter the second number : $'
     result_msg DB 'Result: $'
@@ -45,21 +45,21 @@ MAIN PROC
                                 CAll      READ_NUMBER
                                 MOV       AX, DX
     ; Process the choice
-                                CMP       AX, '1'
+                                CMP       AX, 1
                                 JE        DO_AND
-                                CMP       AX, '2'
+                                CMP       AX, 2
                                 JE        DO_OR
-                                CMP       AX, '3'
+                                CMP       AX, 3
                                 JE        DO_XOR
-                                CMP       AX, '4'
+                                CMP       AX, 4
                                 JE        DO_ADD
-                                CMP       AX, '5'
+                                CMP       AX, 5
                                 JE        DO_SUB
-                                CMP       AX, '6'
+                                CMP       AX, 6
                                 JE        DO_MUL
-                                CMP       AX, '7'
+                                CMP       AX, 7
                                 JE        DO_DIV
-                                CMP       AX, '8'
+                                CMP       AX, 8
                                 JE        EXIT_PROGRAM
 
     ; If the choice is invalid
