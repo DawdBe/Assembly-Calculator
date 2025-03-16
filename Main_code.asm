@@ -22,7 +22,10 @@ ENDM
     menu_msg       DB '1. AND (&)',0DH, 0AH,'2. OR (|) ',0DH, 0AH,'3. XOR (^) ',0DH, 0AH,'4. ADD (+) ',0DH, 0AH,'5. SUB (-) ',0DH, 0AH,'6. MUL (*) ',0DH, 0AH,'7. DIV (/) ',0DH, 0AH,'8. Exit', 0DH, 0AH, '$'
     num1_msg       DB 'Enter the first number : $'
     num2_msg       DB 'Enter the second number : $'
-    result_msg     DB 'Result: $'
+    
+    result_msg_BIN DB 'Result in BIN: $'
+    result_msg_DEC DB 'Result in DEC: $'
+    result_msg_HEX DB 'Result in HEX: $'
     error_msg      DB 'Error! Enter a valid choice$', 0DH, 0AH, '$'
     newline        DB 0DH, 0AH, '$'
     chose_base_msg DB 'Chose the base: ',0DH, 0AH,'1. DICIMAL',0DH, 0AH,'2. BINARY',0DH, 0AH,'3 HEX',0DH, 0AH,'$'
@@ -424,7 +427,7 @@ PRINT_DIC PROC
                                 JNE       CONVERT_LOOP_DIC
                                          
 
-    PRINT_LOOP_DIC:         
+    PRINT_LOOP_DIC:             
                                 POP       DX
                                 ADD       DL, 30H                        ; Convert to ASCII
                                 MOV       AH, 02H
@@ -454,9 +457,9 @@ READ_NUMBER PROC
     HEX1:                       
                                 CALL      READ_HEX
 
-    exit_p:  
+    exit_p:                     
                                 
-                                RET  
+                                RET
                                                  
 
 READ_NUMBER ENDP
@@ -476,9 +479,9 @@ PRINT_NUMBER PROC
     HEX2:                       
                                 CALL      PRINT_HEX
 
-    exit_pr: 
+    exit_pr:                    
     
-                                RET                   
+                                RET
 PRINT_NUMBER ENDP
 handle_logical_operation PROC
                                 CALL      get_numbers
@@ -629,10 +632,23 @@ print_menu ENDP
 
 print_result PROC
                                 print_msg newline
-                                print_msg result_msg
+                                print_msg result_msg_BIN
                                 MOV       DX, result
                                 MOV       AX, DX
-                                CALL      PRINT_NUMBER
+                                CALL      PRINT_BIN
+
+                                print_msg newline
+                                print_msg result_msg_DEC
+                                MOV       DX, result
+                                MOV       AX, DX
+                                CALL      PRINT_DIC
+
+                                print_msg newline
+                                print_msg result_msg_HEX
+                                MOV       DX, result
+                                MOV       AX, DX
+                                CALL      PRINT_HEX
+
                                 print_msg newline
                                 RET
 print_result ENDP
