@@ -115,11 +115,11 @@ MAIN PROC
                                 CMP          AX, 7
                                 JE           DO_DIV
                                 CMP          AX, 8
-                                JE           TO_BIN
+                                JE           TO_BIN_f
                                 CMP          AX, 9
-                                JE           TO_DEC
+                                JE           TO_DEC_f
                                 CMP          AX, 10
-                                JE           TO_HEX
+                                JE           TO_HEX_f
                                 CMP          AX, 11
                                 JE           EXIT_PROGRAM
 
@@ -161,8 +161,32 @@ MAIN PROC
                                 MOV          operator, '/'
                                 CALL         handle_arithmetic_operation
                                 JMP          SHOW_RESULT
+    SHOW_RESULT:                
+                                CALL         SHOW_RESULT_p
+                                JMP          MAIN_LOOP
 
-    TO_BIN:                     
+    TO_BIN_f:                   
+                                CAll         TO_BIN
+                                JMP          MAIN_LOOP
+
+    TO_DEC_f:                   
+                                CAll         TO_DEC
+                                JMP          MAIN_LOOP
+
+    TO_HEX_f:                   
+                                CAll         TO_HEX
+                                JMP          MAIN_LOOP
+
+    EXIT_PROGRAM:               
+                                MOV          AH, 4CH
+                                INT          21H
+MAIN ENDP
+
+    ; --------------------------------------
+    ; ADD PROC CODE HERE
+    ; --------------------------------------
+    
+TO_BIN PROC
                                 print_msg    number_msg
                                 CAll         READ_NUMBER
                                 MOV          AX, DX
@@ -177,9 +201,10 @@ MAIN PROC
                                 CAll         PRINT_BIN
                                 print_msg    newline
                                 print_msg    newline
-                                JMP          MAIN_LOOP
+                                RET
+TO_BIN ENDP
 
-    TO_DEC:                     
+TO_DEC PROC
                                 print_msg    number_msg
                                 CAll         READ_NUMBER
                                 MOV          AX, DX
@@ -194,9 +219,10 @@ MAIN PROC
                                 CAll         PRINT_DIC
                                 print_msg    newline
                                 print_msg    newline
-                                JMP          MAIN_LOOP
+                                RET
+TO_DEC ENDP
 
-    TO_HEX:                     
+TO_HEX PROC
                                 print_msg    number_msg
                                 CAll         READ_NUMBER
                                 MOV          AX, DX
@@ -212,25 +238,18 @@ MAIN PROC
                                 print_msg    newline
                                 print_msg    newline
                                 JMP          MAIN_LOOP
+TO_HEX ENDP
 
-    SHOW_RESULT:                
+    ;description
+SHOW_RESULT_p PROC
+    
                                 clear_screen
                                 CALL         print_result
                                 print_msg    newline
                                 print_msg    newline
                                 print_msg    newline
-                                JMP          MAIN_LOOP
-
-    EXIT_PROGRAM:               
-                                MOV          AH, 4CH
-                                INT          21H
-MAIN ENDP
-
-    ; --------------------------------------
-    ; ADD PROC CODE HERE
-    ; --------------------------------------
-    
-
+                                RET
+SHOW_RESULT_p ENDP
     ; --------------------------------------
     ; READ_DIC: Reads a signed integer
     ; --------------------------------------
@@ -764,19 +783,42 @@ print_menu ENDP
 print_result PROC
                                 MOV          AX, opi
                                 CMP          AX, 1
-                                JE           print_AND
+                                JE           print_AND_f
                                 CMP          AX, 2
-                                JE           print_OR
+                                JE           print_OR_f
                                 CMP          AX, 3
-                                JE           print_XOR
+                                JE           print_XOR_f
                                 CMP          AX, 4
-                                JE           print_ADD
+                                JE           print_ADD_f
                                 CMP          AX, 5
-                                JE           print_SUB
+                                JE           print_SUB_f
                                 CMP          AX, 6
-                                JE           print_MUL
+                                JE           print_MUL_f
                                 CMP          AX, 7
-                                JE           print_DIV
+                                JE           print_DIV_f
+    print_AND_f:                
+                                CAll         print_AND
+                                JMP          exit_result
+    print_OR_f:                 
+                                CAll         print_OR
+                                JMP          exit_result
+    print_XOR_f:                
+                                CAll         print_XOR
+                                JMP          exit_result
+    print_ADD_f:                
+                                CAll         print_ADD
+                                JMP          exit_result
+    print_SUB_f:                
+                                CAll         print_SUB
+                                JMP          exit_result
+    print_MUL_f:                
+                                CAll         print_MUL
+                                JMP          exit_result
+    print_DIV_f:                
+                                CAll         print_DIV
+                                JMP          exit_result
+    exit_result:                
+
                                 RET
 print_result ENDP
 
