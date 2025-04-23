@@ -24,50 +24,43 @@ clear_screen MACRO
 ENDM
 .DATA
     ; Messages
-    menu_msg           DB '1. AND (&)',0DH, 0AH,'2. OR (|) ',0DH, 0AH,'3. XOR (^) ',0DH, 0AH,'4. ADD (+) ',0DH, 0AH,'5. SUB (-) ',0DH, 0AH,'6. MUL (*) ',0DH, 0AH,'7. DIV (/) ',0DH, 0AH,'8. To Binary', 0DH, 0AH,'9. To Decimal', 0DH, 0AH,'10. To Hexa', 0DH, 0AH,'11. Exit', 0DH, 0AH, '$'
-    number_msg         DB 'Enter the number: $'
-    num1_msg           DB 'Enter the first number : $'
-    num2_msg           DB 'Enter the second number : $'
-    dividend_msg       DB 'Enter the Dividend : $'
-    divisor_msg        DB 'Enter the Divisor : $'
-    quotient_msg       DB 'Quotient: $'
-    reminder_msg       DB '                    Reminder: $'
+    menu_msg       DB '1. AND (&)',0DH, 0AH,'2. OR (|) ',0DH, 0AH,'3. XOR (^) ',0DH, 0AH,'4. ADD (+) ',0DH, 0AH,'5. SUB (-) ',0DH, 0AH,'6. MUL (*) ',0DH, 0AH,'7. DIV (/) ',0DH, 0AH,'8. To Binary', 0DH, 0AH,'9. To Decimal', 0DH, 0AH,'10. To Hexa', 0DH, 0AH,'11. Exit', 0DH, 0AH, '$'
+    number_msg     DB 'Enter the number: $'
+    num1_msg       DB 'Enter the first number : $'
+    num2_msg       DB 'Enter the second number : $'
+    dividend_msg   DB 'Enter the Dividend : $'
+    divisor_msg    DB 'Enter the Divisor : $'
+    quotient_msg   DB 'Quotient: $'
+    reminder_msg   DB '                    Reminder: $'
     
-    result_msg_BIN     DB 'The operation in BIN: $'
-    result_msg_DEC     DB 'The operation in DEC: $'
-    result_msg_HEX     DB 'The operation in HEX: $'
-    error_msg          DB 'Error! Enter a valid choice$', 0DH, 0AH, '$'
-    newline            DB 0DH, 0AH, '$'
-    chose_base_msg     DB 'Chose the base: ',0DH, 0AH,'1. DICIMAL',0DH, 0AH,'2. BINARY',0DH, 0AH,'3 HEX',0DH, 0AH,'$'
-    zero_erro          DB 0AH, 0AH, 'Error! DIVITION BY ZERO!!!!!!!! $'
-    and_of             DB ' & $'
-    or_of              DB ' | $'
-    xor_of             DB ' ^ $'
-    add_of             DB ' + $'
-    sub_of             DB ' - $'
-    mul_of             DB ' x $'
-    div_of             DB ' / $'
-    equal              DB ' = $'
-    to_bin_msg         DB '   To Binary =  $'
-    to_dec_msg         DB '   To Decimal =  $'
-    to_hex_msg         DB '   To Hexa =  $'
-    ; Flag messages
-    zero_flag_msg      DB 'Zero Flag (ZF): ', '$'
-    sign_flag_msg      DB 'Sign Flag (SF): ', '$'
-    carry_flag_msg     DB 'Carry Flag (CF): ', '$'
-    parity_flag_msg    DB 'Parity Flag (PF): ', '$'
-    aux_carry_flag_msg DB 'Auxiliary Carry Flag (AF): ', '$'
+    result_msg_BIN DB 'The operation in BIN: $'
+    result_msg_DEC DB 'The operation in DEC: $'
+    result_msg_HEX DB 'The operation in HEX: $'
+    error_msg      DB 'Error! Enter a valid choice$', 0DH, 0AH, '$'
+    newline        DB 0DH, 0AH, '$'
+    chose_base_msg DB 'Chose the base: ',0DH, 0AH,'1. DICIMAL',0DH, 0AH,'2. BINARY',0DH, 0AH,'3 HEX',0DH, 0AH,'$'
+    zero_erro      DB 0AH, 0AH, 'Error! DIVITION BY ZERO!!!!!!!! $'
+    and_of         DB ' & $'
+    or_of          DB ' | $'
+    xor_of         DB ' ^ $'
+    add_of         DB ' + $'
+    sub_of         DB ' - $'
+    mul_of         DB ' x $'
+    div_of         DB ' / $'
+    equal          DB ' = $'
+    to_bin_msg     DB '   To Binary =  $'
+    to_dec_msg     DB '   To Decimal =  $'
+    to_hex_msg     DB '   To Hexa =  $'
 
     ; Variables
-    num1               DW ?
-    num2               DW ?
-    result             DW ?
-    rest               DW ?
-    operator           DW ?
-    isNegative         DB ?
-    base               DB ?
-    opi                DW ?
-    flags              DW ?
+    num1           DW ?
+    num2           DW ?
+    result         DW ?
+    rest           DW ?
+    operator       DW ?
+    isNegative     DB ?
+    base           DB ?
+    opi            DW ?
 .CODE
 MAIN PROC
                                 MOV          AX, @DATA
@@ -699,11 +692,6 @@ get_numbers ENDP
 and_numbers PROC
                                 MOV          AX, num1
                                 AND          AX, num2
-                                PUSH         BX
-                                PUSHF
-                                POP          BX
-                                MOV          [flags], BX
-                                POP          BX
                                 MOV          result, AX
                                 RET
 and_numbers ENDP
@@ -711,11 +699,6 @@ and_numbers ENDP
 or_numbers PROC
                                 MOV          AX, num1
                                 OR           AX, num2
-                                PUSH         BX
-                                PUSHF
-                                POP          BX
-                                MOV          [flags], BX
-                                POP          BX
                                 MOV          result, AX
                                 RET
 or_numbers ENDP
@@ -723,11 +706,6 @@ or_numbers ENDP
 xor_numbers PROC
                                 MOV          AX, num1
                                 XOR          AX, num2
-                                PUSH         BX
-                                PUSHF
-                                POP          BX
-                                MOV          [flags], BX
-                                POP          BX
                                 MOV          result, AX
                                 RET
 xor_numbers ENDP
@@ -738,10 +716,6 @@ xor_numbers ENDP
 add_numbers PROC
                                 MOV          AX, num1
                                 ADD          AX, num2
-                                PUSHF
-                                POP          BX
-                                MOV          [flags], BX
-                                POP          BX
                                 MOV          result, AX
                                 RET
 add_numbers ENDP
@@ -749,10 +723,6 @@ add_numbers ENDP
 sub_numbers PROC
                                 MOV          AX, num1
                                 SUB          AX, num2
-                                PUSHF
-                                POP          BX
-                                MOV          [flags], BX
-                                POP          BX
                                 MOV          result, AX
                                 RET
 sub_numbers ENDP
@@ -765,17 +735,9 @@ mul_numbers PROC
                                 CMP          BX, 0
                                 JL           signed_mul
                                 MUL          BX
-                                PUSHF
-                                POP          BX
-                                MOV          [flags], BX
-                                POP          BX
                                 JMP          end_mul
     signed_mul:                 
                                 IMUL         BX
-                                PUSHF
-                                POP          BX
-                                MOV          [flags], BX
-                                POP          BX
     end_mul:                    
                                 MOV          result, AX
                                 RET
@@ -792,10 +754,6 @@ div_numbers PROC
                                 CMP          BX, 0
                                 JL           signed_div
                                 DIV          BX
-                                PUSHF
-                                POP          BX
-                                MOV          [flags], BX
-                                POP          BX
                                 JMP          end_div
     signed_div:                 
                                 IDIV         BX
@@ -859,10 +817,7 @@ print_result PROC
     print_DIV_f:                
                                 CAll         print_DIV
                                 JMP          exit_result
-
     exit_result:                
-
-                                CAll         SHOW_FLAGS
 
                                 RET
 print_result ENDP
@@ -1177,6 +1132,7 @@ print_MUL PROC
                                 MOV          DX, result
                                 MOV          AX, DX
                                 CAll         PRINT_DIC
+
     ;print the result in hex
                                 print_msg    newline
                                 print_msg    result_msg_HEX
@@ -1271,80 +1227,6 @@ print_DIV PROC
                                 CALL         PRINT_DIC
                                 RET
 print_DIV ENDP
-
-SHOW_FLAGS PROC
-    ; Save registers
-                                PUSH         AX
-                                PUSH         BX
-                                PUSH         CX
-                                PUSH         DX
-
-    ; Get the flags from the variable
-                                MOV          AX, [flags]
-                                MOV          BX, AX
-
-    ; Print Carry Flag (CF) - Bit 0 of AL
-                                print_msg    newline
-                                print_msg    carry_flag_msg
-                                MOV          AL, BL                         ; Use lower byte (AL) of flags
-                                AND          AL, 00000001B                  ; Mask for CF (bit 0)
-                                ADD          AL, '0'
-                                MOV          DL, AL
-                                MOV          AH, 02H
-                                INT          21H
-                                print_msg    newline
-
-    ; Print Auxiliary Carry Flag (AF) - Bit 4 of AL
-                                print_msg    aux_carry_flag_msg
-                                MOV          AL, BL
-                                AND          AL, 00010000B                  ; Mask for AF (bit 4)
-                                SHR          AL, 4                          ; Shift right by 4 to get bit 4 to LSB
-                                ADD          AL, '0'
-                                MOV          DL, AL
-                                MOV          AH, 02H
-                                INT          21H
-                                print_msg    newline
-
-    ; Print Zero Flag (ZF) - Bit 6 of AL
-                                print_msg    zero_flag_msg
-                                MOV          AL, BL
-                                AND          AL, 01000000B                  ; Mask for ZF (bit 6)
-                                SHR          AL, 6                          ; Shift right by 6
-                                ADD          AL, '0'
-                                MOV          DL, AL
-                                MOV          AH, 02H
-                                INT          21H
-                                print_msg    newline
-
-    ; Print Sign Flag (SF) - Bit 7 of AL
-                                print_msg    sign_flag_msg
-                                MOV          AL, BL
-                                AND          AL, 10000000B                  ; Mask for SF (bit 7)
-                                SHR          AL, 7                          ; Shift right by 7
-                                ADD          AL, '0'
-                                MOV          DL, AL
-                                MOV          AH, 02H
-                                INT          21H
-                                print_msg    newline
-
-    ; Print Parity Flag (PF) - Bit 2 of AL
-                                print_msg    parity_flag_msg
-                                MOV          AL, BL
-                                AND          AL, 00000100B                  ; Mask for PF (bit 2)
-                                SHR          AL, 2                          ; Shift right by 2
-                                ADD          AL, '0'
-                                MOV          DL, AL
-                                MOV          AH, 02H
-                                INT          21H
-                                print_msg    newline
-
-    ; Restore registers
-                                POP          DX
-                                POP          CX
-                                POP          BX
-                                POP          AX
-                                RET
-SHOW_FLAGS ENDP
 
 print_error PROC
                                 print_msg    error_msg
